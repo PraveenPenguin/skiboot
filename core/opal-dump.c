@@ -60,8 +60,12 @@ static struct opal_mpipl_fadump *opal_mpipl_cpu_data;
  *   - OPAL metadata area address
  *   - Kernel passed tag during MPIPL registration
  *   - Post MPIPL boot memory size
+ *   - Crash kernel start address
+ *   - Crash kernel size
+ *   - Crash initrd start address
+ *   - Crash initrd size
  */
-#define MAX_OPAL_MPIPL_TAGS	0x04
+#define MAX_OPAL_MPIPL_TAGS	0x08
 static u64 opal_mpipl_tags[MAX_OPAL_MPIPL_TAGS];
 static int opal_mpipl_max_tags = MAX_OPAL_MPIPL_TAGS;
 
@@ -361,6 +365,18 @@ static int64_t opal_mpipl_register_tag(enum opal_mpipl_tags tag,
 		break;
 	case OPAL_MPIPL_TAG_KERNEL:
 		mpipl_metadata->kernel_tag = tag_val;
+		prlog(PR_NOTICE, "Payload sent metadata tag : 0x%llx\n", tag_val);
+		break;
+	case OPAL_MPIPL_TAG_CRASH_KERNEL_BASE:
+		prlog(PR_NOTICE, "Payload sent metadata tag : 0x%llx\n", tag_val);
+		break;
+	case OPAL_MPIPL_TAG_CRASH_KERNEL_SIZE:
+		prlog(PR_NOTICE, "Payload sent metadata tag : 0x%llx\n", tag_val);
+		break;
+	case OPAL_MPIPL_TAG_CRASH_INITRD_BASE:
+		prlog(PR_NOTICE, "Payload sent metadata tag : 0x%llx\n", tag_val);
+		break;
+	case OPAL_MPIPL_TAG_CRASH_INITRD_SIZE:
 		prlog(PR_NOTICE, "Payload sent metadata tag : 0x%llx\n", tag_val);
 		break;
 	default:
